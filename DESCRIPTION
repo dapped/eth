@@ -1,7 +1,7 @@
 Package: eth
 Type: Package
 Title: Interact with Ethereum
-Version: 0.1.11
+Version: 0.2.0
 Authors@R: as.person(c("dapped <dapped@protonmail.com> [aut, cre]"))
 Description: Tools for exploring Ethereum transactions and interacting with 
   Ethereum contracts.

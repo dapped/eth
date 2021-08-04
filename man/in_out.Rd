@@ -2,15 +2,15 @@
 % Please edit documentation in R/in_out.R
 \name{in_out}
 \alias{in_out}
-\title{Get the name of a verified contract}
+\title{Summarize ETH flow for an address}
 \usage{
 in_out(address, api_key, get_names = FALSE)
 }
 \arguments{
-\item{address}{Character. A single verified ethereum contract address as a
-character string (40 hexadecimal characters prepended by '0x').}
+\item{address}{Character. A single externally owned account (user Ethereum
+address).}
 
-\item{api_key}{An Etherscan API key.}
+\item{api_key}{An Etherscan API key (see Details).}
 
 \item{get_names}{Logical. Get contract names for verified contracts?}
 }
@@ -18,10 +18,7 @@ character string (40 hexadecimal characters prepended by '0x').}
 A summary of inflow and outflow of ETH from an address.
 }
 \description{
-Return the name of a verified contract.
-}
-\seealso{
-\code{\link[=get_abi]{get_abi()}}
+Summarize inflow and outflow of ETH from an address.
 }
 \keyword{ETH}
 \keyword{Ethereum,}

@@ -1,15 +1,16 @@
-#' Get the name of a verified contract
+#' Summarize ETH flow for an address
 #'
-#' Return the name of a verified contract.
+#' Summarize inflow and outflow of ETH from an address.
 #'
-#' @param address Character. A single verified ethereum contract address as a
-#'   character string (40 hexadecimal characters prepended by '0x').
-#' @param api_key An Etherscan API key.
+#' @param address Character. A single externally owned account (user Ethereum
+#'   address).
+#' @param api_key An Etherscan API key (see Details).
 #' @param get_names Logical. Get contract names for verified contracts?
 #' @return A summary of inflow and outflow of ETH from an address.
 #' @keywords Ethereum, contract, blockchain, cryptocurrency, crypto, ETH
-#' @importFrom dplyr bind_rows select filter group_by summarise mutate across arrange desc %>%
+#' @importFrom dplyr across arrange bind_rows desc filter group_by mutate select summarise
 #' @importFrom tidyr pivot_wider
+#' @importFrom magrittr %>%
 #' @export
 in_out <- function(address, api_key, get_names=FALSE) {
   address <- tolower(address)
