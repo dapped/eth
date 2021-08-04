@@ -9,6 +9,8 @@
 #'   (`TRUE`) transactions be queried? _Deprecated. Please use `type` instead._
 #' @param type The type of transaction to query. One of `'normal'`,
 #'   `'internal'`, `'ERC20'`, or `'ERC721'`.
+#' @param startblock Starting block for transaction query. Default is 0.
+#' @param endblock Ending block for transaction query. Default is 999999999.
 #' @param network Ethereum network to use. One of `'mainnet'` (default),
 #'   `'ropsten'`, `'rinkeby'`, `'kovan'`, or `'goerli'`.
 #' @param first_page Logical. Should only the first page of results (up to
@@ -34,8 +36,11 @@
 #' @export
 get_txs <- function(address, api_key, internal=FALSE,
                     type=c('normal', 'internal', 'ERC20', 'ERC721'),
-                    network='mainnet', first_page=FALSE, no_errors=TRUE,
+                    startblock=0, endblock=999999999, network='mainnet',
+                    first_page=FALSE, no_errors=TRUE,
                     quiet=FALSE) {
+  if(as.numeric(startblock) > as.numeric(endblock))
+    stop('endblock cannot be less than startblock')
   if (isTRUE(internal)) {
     warning("argument `internal` is deprecated; please use `type` instead.",
             call. = FALSE)
@@ -51,7 +56,8 @@ get_txs <- function(address, api_key, internal=FALSE,
   txtype <- switch(
     type, normal='txlist', internal='txlistinternal',
     ERC20='tokentx', ERC721='tokennfttx')
-  .get_txs <- function(network, txtype, address, startblock, sort, api_key) {
+  .get_txs <- function(network, txtype, address, sort, api_key, startblock,
+                       endblock) {
     j <- jsonlite::fromJSON(sprintf(
       'http://api%s.etherscan.io/api?module=account&action=%s&address=%s&startblock=%s&endblock=99999999&sort=%s&apikey=%s',
       network, txtype, address, startblock, sort, api_key))
@@ -144,7 +150,8 @@ get_txs <- function(address, api_key, internal=FALSE,
   if(isTRUE(first_page)) {
     if(!quiet) message('Getting transactions...')
     txs <- .get_txs(network=network, txtype=txtype, address=address,
-                    startblock=0, sort='desc', api_key=api_key)
+                    startblock=startblock, endblock=endblock, sort='desc',
+                    api_key=api_key)
     if(is.null(txs)) return(NULL)
     txs <- dplyr::select(txs, dplyr::matches('^((?!confirmations).)*$', perl=T))
   } else {

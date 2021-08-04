@@ -9,6 +9,8 @@ get_txs(
   api_key,
   internal = FALSE,
   type = c("normal", "internal", "ERC20", "ERC721"),
+  startblock = 0,
+  endblock = 999999999,
   network = "mainnet",
   first_page = FALSE,
   no_errors = TRUE,
@@ -26,6 +28,10 @@ hexadecimal characters prepended by '0x').}
 
 \item{type}{The type of transaction to query. One of \code{'normal'},
 \code{'internal'}, \code{'ERC20'}, or \code{'ERC721'}.}
+
+\item{startblock}{Starting block for transaction query. Default is 0.}
+
+\item{endblock}{Ending block for transaction query. Default is 999999999.}
 
 \item{network}{Ethereum network to use. One of \code{'mainnet'} (default),
 \code{'ropsten'}, \code{'rinkeby'}, \code{'kovan'}, or \code{'goerli'}.}
